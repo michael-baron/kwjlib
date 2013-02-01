@@ -1,4 +1,4 @@
-package emenda.kwaljlib;
+package org.emenda.kwjlib;
 
 import java.lang.String;
 
