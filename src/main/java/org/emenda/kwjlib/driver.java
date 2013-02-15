@@ -4,14 +4,23 @@ import java.lang.String;
 
 public class driver {
 
+	/* This function contains a sample call to each function of the kwjlib.
+	 * Note that some of these calls will fail if certain conditions do not exist,
+	 * for example: a view can only be created for a project which exists, only
+	 * a build which exists for a given project can be deleted etc.
+	 */
 	public static void main(String[] args) {
-		KWWebAPIService KWservice = new KWWebAPIService("localhost", "8080");
+		String host = "";
+		String port = "";
+		String project_name = "";
+		
+		KWWebAPIService KWservice = new KWWebAPIService(host, port);
 		
 		if(KWservice.connect()) {
 			KWJSONRecord[] records;
 			//Get builds
 			System.out.println("Retrieving builds");
-			records = KWservice.builds("nagra_checker_test");
+			records = KWservice.builds(project_name);
 			System.out.println(KWWebAPIService.getError());
 			if(records != null) {
 				for(KWJSONRecord build : records) {
@@ -26,7 +35,7 @@ public class driver {
 			}
 			//Create a module
 			System.out.println("Creating module");
-			records = KWservice.create_module("nagra_checker_test",
+			records = KWservice.create_module(project_name,
 					"new module",
 					"true",
 					"",
@@ -49,7 +58,7 @@ public class driver {
 			}
 			//Create a view
 			System.out.println("Creating view");
-			records = KWservice.create_view("nagra_checker_test",
+			records = KWservice.create_view(project_name,
 					"new view",
 					"severity:1-3",
 					"",
@@ -68,7 +77,7 @@ public class driver {
 			}
 			//Delete a build
 			System.out.println("Deleting build");
-			records = KWservice.delete_build("test_project",
+			records = KWservice.delete_build(project_name,
 					"build_1");
 			System.out.println(KWWebAPIService.getError());
 			if(records != null) {
@@ -84,7 +93,7 @@ public class driver {
 			}
 			//Delete a module
 			System.out.println("Deleting module");
-			records = KWservice.delete_module("nagra_checker_test",
+			records = KWservice.delete_module(project_name,
 					"new module");
 			System.out.println(KWWebAPIService.getError());
 			if(records != null) {
@@ -100,7 +109,7 @@ public class driver {
 			}
 			//Delete a project
 			System.out.println("Deleting project");
-			records = KWservice.delete_project("test_project");
+			records = KWservice.delete_project(project_name);
 			System.out.println(KWWebAPIService.getError());
 			if(records != null) {
 				for(KWJSONRecord module : records) {
@@ -115,7 +124,7 @@ public class driver {
 			}
 			//Delete a view
 			System.out.println("Deleting view");
-			records = KWservice.delete_view("nagra_checker_test",
+			records = KWservice.delete_view(project_name,
 					"new view");
 			System.out.println(KWWebAPIService.getError());
 			if(records != null) {
@@ -131,7 +140,7 @@ public class driver {
 			}
 			//Generate fchurns report
 			System.out.println("Generating fchurns report");
-			records = KWservice.fchurns("nagra_checker_test",
+			records = KWservice.fchurns(project_name,
 					"hello",
 					"andreas.larfors",
 					"1",
@@ -150,7 +159,7 @@ public class driver {
 			}
 			//Retrieve the list of modules
 			System.out.println("Retrieving list of modules");
-			records = KWservice.modules("nagra_checker_test");
+			records = KWservice.modules(project_name);
 			System.out.println(KWWebAPIService.getError());
 			if(records != null) {
 				for(KWJSONRecord module : records) {
@@ -180,7 +189,7 @@ public class driver {
 			}
 			//Get issues
 			System.out.println("Retrieving issues");
-			records = KWservice.search("nagra_checker_test", "");
+			records = KWservice.search(project_name, "");
 			System.out.println("Error: " + KWWebAPIService.getError());
 			System.out.println("Request sent: " + KWservice.getLastRequest());
 			if(records != null) {
@@ -196,7 +205,7 @@ public class driver {
 			}
 			//Generate build summary report
 			System.out.println("Generating build summary report");
-			records = KWservice.report("nagra_checker_test",
+			records = KWservice.report(project_name,
 					"build_2",
 					"Severity:1-3",
 					"",
@@ -218,7 +227,7 @@ public class driver {
 			}
 			//Update a build
 			System.out.println("Updating a build");
-			records = KWservice.update_build("nagra_checker_test",
+			records = KWservice.update_build(project_name,
 					"build_2",
 					"",
 					"");
@@ -236,7 +245,7 @@ public class driver {
 			}
 			//Update a module
 			System.out.println("Updating a module");
-			records = KWservice.update_module("nagra_checker_test",
+			records = KWservice.update_module(project_name,
 					"module_01",
 					"module_01",
 					"true",
@@ -260,8 +269,8 @@ public class driver {
 			}
 			//Update a project
 			System.out.println("Updating a project");
-			records = KWservice.update_project("nagra_checker_test",
-					"nagra_checker_test",
+			records = KWservice.update_project(project_name,
+					project_name,
 					"a new description",
 					"");
 			System.out.println(KWWebAPIService.getError());
@@ -278,7 +287,7 @@ public class driver {
 			}
 			//Update a view
 			System.out.println("Updating a view");
-			records = KWservice.update_view("nagra_checker_test",
+			records = KWservice.update_view(project_name,
 					"hello",
 					"",
 					"",
@@ -298,7 +307,7 @@ public class driver {
 			}
 			//Retrieve list of views
 			System.out.println("Retrieving list of views");
-			records = KWservice.views("nagra_checker_test");
+			records = KWservice.views(project_name);
 			System.out.println(KWWebAPIService.getError());
 			if(records != null) {
 				for(KWJSONRecord module : records) {
