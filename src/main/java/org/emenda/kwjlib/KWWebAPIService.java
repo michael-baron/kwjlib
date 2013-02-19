@@ -166,11 +166,11 @@ public class KWWebAPIService {
 			 	 "&user=" + KWUtil.user +
 			 	 "&action=" + "create_module" + 
 			 	 "&name=" + module_name +
-			 	 "&allow_all=" + allow_all +
-			 	 ((allow_users != "") ? ("&allow_users=" + allow_users) : "") +
-			 	 ((allow_groups != "") ? ("&allow_groups=" + allow_groups) : "") +
-			 	 ((deny_users != "") ? ("&deny_users=" + deny_users) : "") +
-			 	 ((deny_groups != "") ? ("&deny_groups=" + deny_groups) : "") +
+                                 ((allow_all.equals("")) ? "" : ("&allow_all=" + allow_all)) +
+			 	 ((allow_users.equals("")) ? "" : ("&allow_users=" + allow_users)) +
+			 	 ((allow_groups.equals("")) ? "" : ("&allow_groups=" + allow_groups)) +
+			 	 ((deny_users.equals("")) ? "" : ("&deny_users=" + deny_users)) +
+			 	 ((deny_groups.equals("")) ? "" : ("&deny_groups=" + deny_groups)) +
 			 	 "&paths=" + paths +
 			 	 "&tags=" + tags;
 		return sendRequest(request);
@@ -195,6 +195,20 @@ public class KWWebAPIService {
 				"&query=" + query +
 				"&tags=" + tags +
 				"&is_public=" + is_public;
+		return sendRequest(request);
+	}
+        
+        /*
+	 * defect_types
+	 * Retrieve the list of enabled defect types.
+	 * Example: curl --data "action=defect_types&user=myself&project=my_project" http://localhost:8080/review/api
+	 */
+	public KWJSONRecord[] defect_types(
+					String project_name
+				 ) {
+		String request = "project=" + project_name +
+				"&user=" + KWUtil.user +
+				"&action=" + "defect_types"; 
 		return sendRequest(request);
 	}
 
@@ -282,7 +296,18 @@ public class KWWebAPIService {
 				"&component=" + root_component;
 		return sendRequest(request);
 	}
-
+/*
+        * metrics
+        * Retrieve the list of metrics.
+        * Example: curl --data "action=metrics&user=myself&project=my_project&query=file:MyFile.c" http://localhost:8080/review/api
+        */
+        public KWJSONRecord[] metrics(String project_name){
+            String request = "project=" + project_name +
+				"&user=" + KWUtil.user +
+				"&action=" + "metrics";
+            return sendRequest(request);
+        }
+        
 	/*
 	 * modules
 	 * Retrieve the list of modules for a project.
