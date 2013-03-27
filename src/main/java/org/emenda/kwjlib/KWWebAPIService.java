@@ -12,19 +12,31 @@ public class KWWebAPIService {
 	private static String m_s_lastrequest = "";
 	
 	/*
-	 * Constructor which takes parameters and stores them in the properties object
+	 * Legacy constructor without SSL support
 	 */
 	public KWWebAPIService(String host,
 						   String port) {
 		m_kw_properties = new Properties();
 		m_kw_properties.setProperty("kwwebapihost", host);
 		m_kw_properties.setProperty("kwwebapiport", port);
+                m_kw_properties.setProperty("kwwebapissl", "n");
+		m_kw_properties.setProperty("kwwebapiuser", "");
+	}
+        
+        /*
+	 * Constructor which takes parameters and stores them in the properties object
+	 */
+	public KWWebAPIService(String host,
+						   String port, boolean useSSL) {
+		m_kw_properties = new Properties();
+		m_kw_properties.setProperty("kwwebapihost", host);
+		m_kw_properties.setProperty("kwwebapiport", port);
+                m_kw_properties.setProperty("kwwebapissl", (useSSL ? "y" : "n"));
 		m_kw_properties.setProperty("kwwebapiuser", "");
 	}
 	
-	/*
-	 * Constructor which takes parameters and stores them in the properties object
-	 * Also takes user if specifying this is a requirement
+        /*
+	 * Legacy user constructor without SSL support
 	 */
 	public KWWebAPIService(String host,
 						   String port,
@@ -32,6 +44,21 @@ public class KWWebAPIService {
 		m_kw_properties = new Properties();
 		m_kw_properties.setProperty("kwwebapihost", host);
 		m_kw_properties.setProperty("kwwebapiport", port);
+                m_kw_properties.setProperty("kwwebapissl", "n");
+		m_kw_properties.setProperty("kwwebapiuser", user);
+	}
+        
+	/*
+	 * Constructor which takes parameters and stores them in the properties object
+	 * Also takes user if specifying this is a requirement
+	 */
+	public KWWebAPIService(String host,
+						   String port, boolean useSSL,
+						   String user) {
+		m_kw_properties = new Properties();
+		m_kw_properties.setProperty("kwwebapihost", host);
+		m_kw_properties.setProperty("kwwebapiport", port);
+                m_kw_properties.setProperty("kwwebapissl", (useSSL ? "y" : "n"));
 		m_kw_properties.setProperty("kwwebapiuser", user);
 	}
 	
@@ -41,6 +68,7 @@ public class KWWebAPIService {
 	public boolean connect() {
 		m_kw_connection = new KWConnection(m_kw_properties.getProperty("kwwebapihost"), 
 				Integer.valueOf(m_kw_properties.getProperty("kwwebapiport")),
+                                (m_kw_properties.getProperty("kwwebapissl").equals("y") ? true : false),
 				m_kw_properties.getProperty("kwwebapiuser"));
 		if(!m_kw_connection.successfulInitialisation()) {
 			KWWebAPIService.appendError("public boolean connect():\n" +
