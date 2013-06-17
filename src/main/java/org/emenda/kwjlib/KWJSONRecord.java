@@ -31,4 +31,14 @@ public class KWJSONRecord {
 	public String toString() {
 		return m_json_obj.toString();
 	}
+        
+	public Boolean exists(String a_key) {
+		try {
+			m_json_obj.get(a_key);
+			return true;
+		}
+		catch(JSONException e) {
+			return false;
+		}
+	}
 }

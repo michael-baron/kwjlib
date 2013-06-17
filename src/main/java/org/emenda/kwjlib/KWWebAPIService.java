@@ -329,10 +329,11 @@ public class KWWebAPIService {
         * Retrieve the list of metrics.
         * Example: curl --data "action=metrics&user=myself&project=my_project&query=file:MyFile.c" http://localhost:8080/review/api
         */
-        public KWJSONRecord[] metrics(String project_name){
-            String request = "project=" + project_name +
-				"&user=" + KWUtil.user +
-				"&action=" + "metrics";
+        public KWJSONRecord[] metrics(String project_name, String options) {
+        String request = "project=" + project_name
+                + "&user=" + KWUtil.user
+                + "&action=" + "metrics"
+                + "&query=" + options;
             return sendRequest(request);
         }
         
