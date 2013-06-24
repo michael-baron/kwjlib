@@ -32,13 +32,13 @@ public class KWJSONRecord {
 		return m_json_obj.toString();
 	}
         
-	public Boolean exists(String a_key) {
-		try {
-			m_json_obj.get(a_key);
-			return true;
-		}
-		catch(JSONException e) {
-			return false;
-		}
+	public boolean exists(String a_key) {
+            try {
+                m_json_obj.get(a_key);
+                return true;
+            }
+            catch(JSONException e) {
+                return false;
+            }
 	}
 }
